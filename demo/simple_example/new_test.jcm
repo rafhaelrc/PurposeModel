@@ -1,0 +1,30 @@
+/*
+    new_test
+    ---------------------------
+
+    JaCaMo Application File
+
+    This file defines the initial state of the MAS (initial agents, environment, organisation, ....)
+
+    (see jacamo/doc/jcm.html for more information about what can be defined in this file)
+
+    JaCaMo 1.0
+    November 16, 2021 - 14:14:04
+*/
+
+mas new_test {
+
+    agent sample_agent{
+    	focus: onto
+    }
+
+	workspace wp{
+		//artifact onto: pucrs.smart.ontology.mas.OntologyArtifact("src/resources/OntologiaTeste.owl")
+		//artifact onto: mas.OntologyArtifact("src/resources/OntologiaTeste.owl")
+		artifact onto: mas.OntologyArtifact("src/resources/initial_ontology_model_five_version.owl")
+	}
+
+    
+
+}
+
