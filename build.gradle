@@ -1,0 +1,65 @@
+defaultTasks 'jar'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+version '1.0.0'
+group   'ufsc.pgeas'
+
+//sourceCompatibility = 1.8
+//targetCompatibility = 1.8
+
+/*
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(15)
+    }
+}
+*/
+
+repositories {
+    mavenCentral() 
+    
+    maven { url "https://raw.githubusercontent.com/jacamo-lang/mvn-repo/master" }
+    //maven { url "https://repo.gradle.org/gradle/libs-releases-local" }
+    maven { url 'https://jitpack.io' }
+      
+}
+
+dependencies { 
+	implementation group: 'net.sourceforge.owlapi', name: 'owlapi-distribution', version: '5.1.19'
+	implementation group: 'net.sourceforge.owlapi', name: 'org.semanticweb.hermit', version: '1.4.5.519'
+    //implementation ('org.jacamo:jacamo:1.1-SNAPSHOT')
+    implementation ('org.jacamo:jacamo:0.9')
+    //implementation 'com.github.rafhaelrc:PurposeModel:3.0.0'
+    //implementation 'com.github.smart-pucrs:MasOntology:2.0.0'   
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+}
+
+jar {
+    baseName 'purposeModeeel'
+    manifest {
+        attributes 'Main-Class': 'Main',
+                   'Specification-Title': 'Purpose Model',
+                   'Specification-Version': project.version,
+                   'Implementation-Version': new Date().toString()
+    }
+}
+
+
+
+clean {
+    delete 'bin'
+    delete 'build'
+    delete 'log'
+}
