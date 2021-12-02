@@ -3,7 +3,7 @@ defaultTasks 'jar'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
-version '1.0.0'
+version '1.0.1'
 group   'ufsc.pgeas'
 
 //sourceCompatibility = 1.8
@@ -47,7 +47,7 @@ sourceSets {
 }
 
 jar {
-    baseName 'purposeModeeel'
+    baseName 'purposeModel'
     manifest {
         attributes 'Main-Class': 'Main',
                    'Specification-Title': 'Purpose Model',

@@ -42,24 +42,22 @@ public class OntoQueryLayerBoolean {
     
     public boolean thereIsAPredicateInOntology(Literal predicate) {
     	//isOwnerOf(joao,bookA);
-    	
-    	if(predicate.getTerms().size() == 0) { // E se for 0?
-    		System.out.println("property ++ code later");
-    	}
-    	// It means that the predicate contains more than one terms.
-    	else {
-    		OWLNamedIndividual owlIndividualFunctor = ontoQuery.getOWLIndividual(predicate.getFunctor().toString());
-    		OWLClass owlclassPredicate =  ontoQuery.getOWLClass("Predicate");
-    		OWLObjectProperty owlObjectPropertyhasParameter = ontoQuery.getOWLObjectProperty("hasParameter");
+    	OWLNamedIndividual owlIndividualFunctor = ontoQuery.getOWLIndividual(predicate.getFunctor().toString());
+    	OWLClass owlclassPredicate =  ontoQuery.getOWLClass("Predicate");
+    	OWLObjectProperty owlObjectPropertyhasParameter = ontoQuery.getOWLObjectProperty("hasParameter");
     		
     		/* (1) there is a individual that has the same name of functor of the predicate 
     	   		and this individual pertains to predicate class
     		 */
-    		if(!ontoQuery.getOntology().isInstanceOf(owlIndividualFunctor, owlclassPredicate)){
+    	if(!ontoQuery.getOntology().isInstanceOf(owlIndividualFunctor, owlclassPredicate)){
     			System.out.println("First verification");
     			return false;
-    		}
-    		
+    	}
+    	if(predicate.getArity() == 0) { // E se for 0?
+    		//System.out.println("property ++ code later");
+    		return true;
+    	}
+    	else {	
     		/*
     		 * (2) check if the arguments of predicate are related to an individual 
     		 *  (that is the range of relation with the predicate)

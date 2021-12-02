@@ -18,6 +18,7 @@ import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import cartago.Artifact;
 import cartago.OPERATION;
 import cartago.OpFeedbackParam;
+import cartago.manual.syntax.Term;
 import jason.asSyntax.Literal;
 import oo.OntoQueryLayer;
 import mas.OntoQueryLayerLiteral;
@@ -226,10 +227,9 @@ public class OntologyArtifact extends Artifact {
 	@OPERATION
 	void isPurposeOfState(Object predicate, OpFeedbackParam<String[]> purposes) {
 		//Literal predicate2 = Util.createLiteral(predicate); own method to convert strint to literal
-		
 		Literal predicate2 = Literal.parseLiteral(predicate.toString());
-		
-		ArrayList<String> arrayStates;
+				
+		ArrayList<String> arrayStates   = new ArrayList<>();
 		ArrayList<String> arrayPurposes = new ArrayList<>();
 		
 		if(queryEngineBoolean.thereIsAPredicateInOntology(predicate2)) {
