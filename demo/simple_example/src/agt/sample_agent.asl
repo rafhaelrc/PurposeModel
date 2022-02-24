@@ -10,7 +10,7 @@ status(commanding_an_attack).
 
 /* Plans */
 
-+!start : true <- 
++!start : true <-
 	.print("Let's use an ontology");
 	/*getInstances("Beagle", Instances);
 	.print("Instances: ",Instances);
@@ -18,11 +18,11 @@ status(commanding_an_attack).
 	*/
 	?status(Status);
 	.print("Status: ", Status);
-	getStatusFunctionAndReturnPurpose(Status, NamePurposes);
+	getPurposeOfStatusFunctions(Status, NamePurposes);
 	!percorreList(NamePurposes);
 	.
 
- 
+
  +!percorreList([]).
 
 +!percorreList([H|T])

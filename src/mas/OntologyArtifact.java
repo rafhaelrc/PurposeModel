@@ -111,7 +111,7 @@ public class OntologyArtifact extends Artifact {
 		List<Object> names = queryEngine.getObjectPropertyNames();
 		objectPropertyNames.set(names.toArray(new Literal[names.size()]));
 	}
-	
+
 
 	/**
 	 * @param domainName   Name of the instance ({@link OWLNamedIndividual}} which
@@ -210,28 +210,28 @@ public class OntologyArtifact extends Artifact {
 		List<Object> names = queryEngine.getDataPropertyNames();
 		dataPropertyNames.set(names.toArray(new Literal[names.size()]));
 	}
-	
+
 	/**
 	 * create a predicate
 	 * check if this predicate there is in the ontology
 	 * if true,
 	 * check if this predicate are related to a state of the system
-	 * if true, 
+	 * if true,
 	 * get the state
 	 * looking for purposes that are related to state.
 	 * @param predicate
 	 * @param purposes
 	 */
-	
-	
+
+/* isPurposeOfState -> getPurposesOfState*/
 	@OPERATION
-	void isPurposeOfState(Object predicate, OpFeedbackParam<String[]> purposes) {
+	void getPurposesOfState(Object predicate, OpFeedbackParam<String[]> purposes) {
 		//Literal predicate2 = Util.createLiteral(predicate); own method to convert strint to literal
 		Literal predicate2 = Literal.parseLiteral(predicate.toString());
-				
+
 		ArrayList<String> arrayStates   = new ArrayList<>();
 		ArrayList<String> arrayPurposes = new ArrayList<>();
-		
+
 		if(queryEngineBoolean.thereIsAPredicateInOntology(predicate2)) {
 			arrayStates =  queryEngineString.getStatesByPredicate(predicate2);
 			for (String state : arrayStates) {
@@ -246,15 +246,16 @@ public class OntologyArtifact extends Artifact {
 			purposes.set(Util.convertArrayListOfStringinArrayofString(arrayPurposes));
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @param List of String 
+	 *
+	 * @param List of String
 	 * @param statusFunctionName
 	 */
-	
+
+/*old method - isPurposeOfSF -> new method -  getStatusFunctionsFromPurposes */
 	@OPERATION
-	void isPurposeOfSF(Object[] purposes, OpFeedbackParam<String[]> statusFunctionNames) {
+	void getStatusFunctionsFromPurposes(Object[] purposes, OpFeedbackParam<String[]> statusFunctionNames) {
 		ArrayList<String> statusFunctions = new ArrayList<>();
 		for(Object objPurpose : purposes) {
 			for(String sf : queryEngineString.getStatusFunctionsByPurpose(String.valueOf(objPurpose))) {
@@ -263,22 +264,22 @@ public class OntologyArtifact extends Artifact {
 		}
 		statusFunctionNames.set(Util.convertArrayListOfStringinArrayofString(statusFunctions));
 	}
-	
-	
+
+
 //	Method that returns only a Literal.
 //	@OPERATION
 //	void isPurposeOfSF(Object[] purposes, OpFeedbackParam<Literal> statusFunction) {
 //		System.out.println("Size of the list: " + purposes.length);
-//		
+//
 //		for (OWLNamedIndividual individual : queryEngineLayer.getObjectPropertyValues(purposes[0].toString(), "isPurposeOf")) {
 //			Literal L = ASSyntax.createLiteral(individual.getIRI().getFragment());
 //			statusFunction.set(L);
 //		}
-//	} 
-	
-	
+//	}
+
+	/* old method getStatusFunctionAndReturnPurpose-> new method getPurposeofStatusFunctions */
 	@OPERATION
-	void getStatusFunctionAndReturnPurpose(Object statusFunction, OpFeedbackParam<String[]> purposes) {
+	void getPurposesOfStatusFunctions(Object statusFunction, OpFeedbackParam<String[]> purposes) {
 		ArrayList<String> arrayPurpose = new ArrayList<>();
 		for(String purpose : queryEngineString.getPurposesByStatusFunctions(String.valueOf(statusFunction))) {
 			//System.out.println("Purpose encontrado: " + purpose);
@@ -286,15 +287,17 @@ public class OntologyArtifact extends Artifact {
 		}
 		purposes.set(Util.convertArrayListOfStringinArrayofString(arrayPurpose));
 	}
-	
-	
+
+
 	/**
 	 * get a list of purposes and return a list of the states related to purposes.
 	 * @param purposes
 	 * @param states
-	 * PRECISA CONSERTAR. EU TO PEGANDO SOMENTE O PRIMEIRO PROPÓSITO DA LISTA DE OBJETO E BUSCANDO OS STATES. 
-	 * SE TIVER MAIS DE UM PROPÓSITO NA LISTA, OS D+ SÃO IGNORADOS.
+	 * PRECISA CONSERTAR. EU TO PEGANDO SOMENTE O PRIMEIRO PROPï¿½SITO DA LISTA DE OBJETO E BUSCANDO OS STATES.
+	 * SE TIVER MAIS DE UM PROPï¿½SITO NA LISTA, OS D+ Sï¿½O IGNORADOS.
 	 */
+
+	/*  */
 	@OPERATION
 	void isStateOfPurpose(Object[] purposes, OpFeedbackParam<String[]> states) {
 		ArrayList<String> arrayStates = new ArrayList<>();
@@ -307,9 +310,9 @@ public class OntologyArtifact extends Artifact {
 		}
 		states.set(Util.convertArrayListOfStringinArrayofString(arrayStates));
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param states
 	 * @param predicates
 	 */
@@ -319,7 +322,6 @@ public class OntologyArtifact extends Artifact {
 		returnPredicates = queryEngineString.getPredicatesByState(states[0].toString());
 		predicates.set(Util.convertArrayListOfLiteralinArrayofLiteral(returnPredicates));
 	}
-	
-	
-}
 
+
+}

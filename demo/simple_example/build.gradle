@@ -24,22 +24,20 @@ java {
 }
 
 repositories {
-	mavenCentral() 
+	mavenCentral()
  	maven { url "https://raw.githubusercontent.com/jacamo-lang/mvn-repo/master" }
     maven { url "https://repo.gradle.org/gradle/libs-releases-local" }
-    maven { url 'https://jitpack.io' }  
+    maven { url 'https://jitpack.io' }
 }
 
-dependencies { 
-	//implementation 'com.github.rafhaelrc:PurposeModel:main-SNAPSHOT'
-	implementation 'com.github.rafhaelrc:PurposeModel:1.0.1'
-	//implementation ('org.jacamo:jacamo:1.1-SNAPSHOT')
-   // implementation 'com.github.smart-pucrs:MasOntology:2.0.0'
-    implementation ('org.jacamo:jacamo:1.1-SNAPSHOT')
+dependencies {
+
+	implementation ('com.github.rafhaelrc:PurposeModel:main-SNAPSHOT')
+	implementation ('org.jacamo:jacamo:1.1.1-SNAPSHOT')
     //implementation ('org.jacamo:jacamo:0.9')
-    
-   	
-	   
+
+
+
 }
 
 sourceSets {
