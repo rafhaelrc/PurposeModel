@@ -32,7 +32,7 @@ repositories {
 
 dependencies {
 
-	implementation ('com.github.rafhaelrc:PurposeModel:1.2')
+	implementation ('com.github.rafhaelrc:PurposeModel:1.3')
 	implementation ('org.jacamo:jacamo:1.1.1-SNAPSHOT')
     //implementation ('org.jacamo:jacamo:0.9')
 
