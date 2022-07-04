@@ -18,7 +18,7 @@ status(commanding_an_attack).
 	*/
 	?status(Status);
 	.print("Status: ", Status);
-	getPurposeOfStatusFunctions(Status, NamePurposes);
+	getPurposesOfStatusFunctions(Status, NamePurposes);
 	!percorreList(NamePurposes);
 	.
 

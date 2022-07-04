@@ -76,7 +76,31 @@ public class OntoQueryLayerString{
     
     
     /**
-	 * Method that gets the purpose associated to the individual that represents a state of the system. 
+	 * Method that gets one purpose associated to the individual that represents a state of the system. 
+	 * @param individualState
+	 * @return string purpose
+	 */
+    
+	public String getPurposeByState(String individualState) {
+		ArrayList<String> purposes = new ArrayList<>();
+		OWLNamedIndividual owlIndividual = ontoQuery.getOWLIndividual(individualState); //isOwnerOf
+		OWLObjectProperty owlObjectPropertyisConsequenceOf = ontoQuery.getOWLObjectProperty("isConsequenceOf");
+    	
+    	Set<OWLNamedIndividual> rangePredicateRelation =  
+        	    ontoQuery.getOntology().getObjectPropertyValues(owlIndividual, owlObjectPropertyisConsequenceOf);
+    	
+    	for(OWLNamedIndividual inv : rangePredicateRelation){
+    		//purposes.add(inv.getIRI().getShortForm());
+    		return inv.getIRI().getShortForm();
+    	}
+		return null;
+		
+	}
+    
+    
+    
+    /**
+	 * Method that gets the purposes associated to the individual that represents a state of the system. 
 	 * @param individualState
 	 * @return string purpose
 	 */
@@ -185,7 +209,7 @@ public class OntoQueryLayerString{
 	    		Set<OWLObjectPropertyAssertionAxiom> objectPropertyAssertionAxiom  =
     					ontoQuery.getOntology().getOntology().getObjectPropertyAssertionAxioms(functor);
 	    		
-	    		// Varro aqui para achar as posições dos termos no predicado.
+	    		// Varro aqui para achar as posiï¿½ï¿½es dos termos no predicado.
     			for(OWLObjectPropertyAssertionAxiom testin : objectPropertyAssertionAxiom) {
     				if(testin.getProperty().getNamedProperty().getIRI().getShortForm().equals("hasParameter")) {
     					for(OWLAnnotation annot : testin.getAnnotations()) {
@@ -193,8 +217,8 @@ public class OntoQueryLayerString{
     							int begin = annot.annotationValue().toString().indexOf("\"");
     							int end = annot.annotationValue().toString().lastIndexOf("\"");
     							int valueFiltrado = Integer.valueOf(annot.annotationValue().toString().substring(begin+1, end));
-    							//System.out.println("Anotação Name: " + annot.getProperty().getIRI().getShortForm()); 
-        						//System.out.println("Anotação Value Filtrada: " + valueFiltrado);
+    							//System.out.println("Anotaï¿½ï¿½o Name: " + annot.getProperty().getIRI().getShortForm()); 
+        						//System.out.println("Anotaï¿½ï¿½o Value Filtrada: " + valueFiltrado);
         						//System.out.println("Termo:" + predicate.getTerm(valueFiltrado-1));
         						//System.out.println("Objecto:" + (testin.getObject().asOWLNamedIndividual().getIRI().getShortForm()));
         						temporaryPredicate[valueFiltrado] = testin.getObject().asOWLNamedIndividual().getIRI().getShortForm();

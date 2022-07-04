@@ -21,11 +21,11 @@ import cartago.OpFeedbackParam;
 import cartago.manual.syntax.Term;
 import jason.asSyntax.Literal;
 import oo.OntoQueryLayer;
-import mas.OntoQueryLayerLiteral;
 import oo.OntoQueryLayerBoolean;
 import oo.OntoQueryLayerString;
 import oo.OwlOntoLayer;
 import oo.Util;
+
 
 
 
@@ -211,6 +211,16 @@ public class OntologyArtifact extends Artifact {
 		dataPropertyNames.set(names.toArray(new Literal[names.size()]));
 	}
 
+	
+	@OPERATION
+	void teste(String teste) {
+		System.out.println("Só testar.." + teste);
+	}
+	
+/**  Methods above were delivered with the MasOntology */	
+
+/**  Methods below were created for use the Propose Model */
+	
 	/**
 	 * create a predicate
 	 * check if this predicate there is in the ontology
@@ -219,11 +229,10 @@ public class OntologyArtifact extends Artifact {
 	 * if true,
 	 * get the state
 	 * looking for purposes that are related to state.
-	 * @param predicate
-	 * @param purposes
+	 * @param Object predicate
+	 * @return List<Strig> of purposes
 	 */
 
-/* isPurposeOfState -> getPurposesOfState*/
 	@OPERATION
 	void getPurposesOfState(Object predicate, OpFeedbackParam<String[]> purposes) {
 		//Literal predicate2 = Util.createLiteral(predicate); own method to convert strint to literal
@@ -247,13 +256,84 @@ public class OntologyArtifact extends Artifact {
 		}
 	}
 
+	
+	
 	/**
-	 *
-	 * @param List of String
-	 * @param statusFunctionName
+	 * create a predicate
+	 * check if this predicate there is in the ontology
+	 * if true,
+	 * check if this predicate are related to a state of the system
+	 * if true,
+	 * get the state
+	 * looking for ---- one purpose ---- that are related to state.
+	 * @param Object predicate
+	 * @return one Purpose
+	 */
+	@OPERATION
+	void getPurposeOfState(Object predicate, OpFeedbackParam<String> purpose) {
+		Literal predicate2 = Literal.parseLiteral(predicate.toString());
+
+		ArrayList<String> arrayStates   = new ArrayList<>();
+		//ArrayList<String> arrayPurposes = new ArrayList<>();
+
+		if(queryEngineBoolean.thereIsAPredicateInOntology(predicate2)) {
+			arrayStates =  queryEngineString.getStatesByPredicate(predicate2);
+			for (String state : arrayStates) {
+				purpose.set(queryEngineString.getPurposeByState(state));
+			}
+			
+		}
+		else {
+			System.out.println("The terms of the predicate are incorrect.");
+			purpose.set(null);
+		}
+	}
+	
+	
+	/**
+	 * Methods relate to purposes and Status-FUnctions
+	 */
+	
+	
+	/**
+	 * Method to get one (only one) Status-Function relate to one (only one) purpose informed in input.
+	 * @param Object Purposes
+	 * @return String of StatusFunction
 	 */
 
-/*old method - isPurposeOfSF -> new method -  getStatusFunctionsFromPurposes */
+	@OPERATION
+	void getStatusFunctionFromPurpose(Object purpose, OpFeedbackParam<String> statusFunction) {
+		//ArrayList<String> statusFunctions = new ArrayList<>();
+		for(String sf : queryEngineString.getStatusFunctionsByPurpose(String.valueOf(purpose))) {
+			statusFunction.set(sf);
+		}
+	}
+	
+	
+	
+	/**
+	 * Method to get Status-Functions relate to one (only one) purpose informed in input.
+	 * @param Object Purpose
+	 * @return List<String> of StatusFunctions
+	 */
+
+	@OPERATION
+	void getStatusFunctionsFromPurpose(Object purpose, OpFeedbackParam<String[]> statusFunctionNames) {
+		ArrayList<String> statusFunctions = new ArrayList<>();
+		for(String sf : queryEngineString.getStatusFunctionsByPurpose(String.valueOf(purpose))) {
+			statusFunctions.add(sf);
+		}
+		statusFunctionNames.set(Util.convertArrayListOfStringinArrayofString(statusFunctions));
+	}
+	
+	
+	
+	/**
+	 * Method to get Status-Functions relate to List of purposes informed in input.
+	 * @param List<Object> of Purposes
+	 * @return List<String> of StatusFunctions
+	 */
+
 	@OPERATION
 	void getStatusFunctionsFromPurposes(Object[] purposes, OpFeedbackParam<String[]> statusFunctionNames) {
 		ArrayList<String> statusFunctions = new ArrayList<>();
@@ -266,18 +346,7 @@ public class OntologyArtifact extends Artifact {
 	}
 
 
-//	Method that returns only a Literal.
-//	@OPERATION
-//	void isPurposeOfSF(Object[] purposes, OpFeedbackParam<Literal> statusFunction) {
-//		System.out.println("Size of the list: " + purposes.length);
-//
-//		for (OWLNamedIndividual individual : queryEngineLayer.getObjectPropertyValues(purposes[0].toString(), "isPurposeOf")) {
-//			Literal L = ASSyntax.createLiteral(individual.getIRI().getFragment());
-//			statusFunction.set(L);
-//		}
-//	}
 
-	/* old method getStatusFunctionAndReturnPurpose-> new method getPurposeofStatusFunctions */
 	@OPERATION
 	void getPurposesOfStatusFunctions(Object statusFunction, OpFeedbackParam<String[]> purposes) {
 		ArrayList<String> arrayPurpose = new ArrayList<>();
@@ -297,6 +366,7 @@ public class OntologyArtifact extends Artifact {
 	 * SE TIVER MAIS DE UM PROP�SITO NA LISTA, OS D+ S�O IGNORADOS.
 	 */
 
+	
 	/*  */
 	@OPERATION
 	void isStateOfPurpose(Object[] purposes, OpFeedbackParam<String[]> states) {
@@ -322,6 +392,36 @@ public class OntologyArtifact extends Artifact {
 		returnPredicates = queryEngineString.getPredicatesByState(states[0].toString());
 		predicates.set(Util.convertArrayListOfLiteralinArrayofLiteral(returnPredicates));
 	}
+   
+	
+	
+	/**
+	 * 
+	 * @param purpose
+	 * @param predicates
+	 */
+	@OPERATION
+    void getPredicatesOfStatesRelatedToPurpose(Object purpose, OpFeedbackParam<Literal[]> predicates) {
+		
+		/*
+		 * List<Object> individuals = queryEngine.getIndividualNames(conceptName);
+		instances.set(individuals.toArray(new Literal[individuals.size()]));
+		 */
+		
+		
+		ArrayList<Literal> returnPredicates = new ArrayList<>();
+		ArrayList<String> arrayResultStates;
+		arrayResultStates =  queryEngineString.getStatesByPurpose(purpose.toString());
+		for (String state : arrayResultStates) {
+			for(Literal predicate: queryEngineString.getPredicatesByState(state)) {
+				returnPredicates.add(predicate); // pq um estado pode ter n predicados.
+			}
+			//queryEngineString.getPredicatesByState(state);
+		}
+		// ta dando problema aqui no retorno do literal
+		predicates.set(returnPredicates.toArray(new Literal[returnPredicates.size()]));
+	}	
+	
 
 
 }
