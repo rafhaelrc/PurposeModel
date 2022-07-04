@@ -3,19 +3,19 @@ defaultTasks 'jar'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
-version '1.6'
+version '1.8'
 group   'ufsc.pgeas'
 
 //sourceCompatibility = 1.8
 //targetCompatibility = 1.8
 
-/*
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(15)
     }
 }
-*/
+
 
 repositories {
     mavenCentral()
