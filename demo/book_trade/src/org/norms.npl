@@ -1,0 +1,7 @@
+scope main {
+
+
+    norm n1: payment(X)
+       -> obligation(tom,n1, deliverBook(X), `now`+`15 seconds`).
+    
+}

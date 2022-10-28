@@ -15,10 +15,21 @@
 mas new_test {
 
 	agent bob {
-    	focus: machine
+    	focus: machine, inst_test.inst_test_art //i1.i1_art
     }
     agent tom {
-    	focus: machine
+    	focus: machine, 
+    	       wsp_npl.nplArt, // case 03 
+    	       inst_test.inst_test_art //focus on the institutional artifact
+    		
+    	goals: setup_sai  //connect norms and institution - case 03
+    }
+
+	/*
+	 * Case 03 toda esse workspace
+	 */
+	workspace wsp_npl {
+          artifact nplArt: sai.bridges.jacamo.NormativeBoardSai
     }
 
 	workspace wp{
@@ -32,6 +43,11 @@ mas new_test {
     workspace wsp {
 		//artifact onto: mas.OntologyArtifact("src/resources/social_networks_ontology.owl")
 		artifact machine: tools.ElectronicMachine()
+	}
+	
+	//institution i1: src/resources/constitutive-specification.sai {
+	institution inst_test: src/resources/constitutive-specification.sai {
+		workspaces: wsp
 	}
     
     

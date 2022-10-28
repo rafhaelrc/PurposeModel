@@ -23,16 +23,16 @@ public class ElectronicMachine extends Artifact{
 
 	@OPERATION
 	public void deliverPaperNote(String seller) {
-		defineObsProperty("receivedPaperNote", "bob");
-		//System.out.println("Apenas testando...  "  + seller);
-		// propriedade observ�vel holdBook(multiAgentSystem);
-		// Quem coloca o holdBook pra valer.
+		System.out.println("Apenas testando...  "  + seller);
+		defineObsProperty("receivedPaperNote", "bob"); // case 01
+		defineObsProperty("payment", "bob"); // case 02
 	}
 	
 	@OPERATION
 	public void deliverBook(String buyer) {
 		System.out.println("Nome do comprador:  "  + buyer);
-		defineObsProperty("deliverBook", buyer);
+		//defineObsProperty("deliveredBook", buyer);
+		defineObsProperty("deliveredBook");
 		
 	}
 
