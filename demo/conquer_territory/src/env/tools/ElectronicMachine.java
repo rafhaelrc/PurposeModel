@@ -16,17 +16,14 @@ public class ElectronicMachine extends Artifact{
 	}
 
 	@OPERATION
-	public void deliver_paper_note(String seller) {
-		//defineObsProperty("deliver_paper_note", "bob"); // case 01
-		System.out.println("Ação feita...");
-		defineObsProperty("payment", "bob"); // case 02
+	public void broadcast_a_message() {
+		System.out.println("broadcast_a_message...");
 		// implement the action..
-		
-		
 	}
+	
 	@OPERATION
-	public void deliverBook(String buyer) {
-		defineObsProperty("deliverBook");
+	public void posting_on_a_webservice() {
+		System.out.println("posting_on_a_webservice...");
 		// implement the action..
 	}
 }

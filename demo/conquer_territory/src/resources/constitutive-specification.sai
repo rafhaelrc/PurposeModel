@@ -1,0 +1,16 @@
+/**/
+
+institution_id : bhInst.
+
+status_functions:
+
+events: forcing_an_attack, authorizing_an_attack.
+
+
+constitutive_rules:
+
+1: broadcast_a_message count-as forcing_an_attack.
+2: posting_on_a_webservice count-as authorizing_an_attack. 
+
+
+

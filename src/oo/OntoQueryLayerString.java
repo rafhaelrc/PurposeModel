@@ -133,6 +133,7 @@ public class OntoQueryLayerString{
         	    ontoQuery.getOntology().getObjectPropertyValues(owlIndividual, owlObjectPropertyisPurposeOf);
     	
     	for(OWLNamedIndividual inv : rangePredicateRelation){
+    		System.out.println("TEEEEESTE: " + inv.getIRI().getShortForm());
     		statusFunction.add(inv.getIRI().getShortForm());
     	}
 		return statusFunction;

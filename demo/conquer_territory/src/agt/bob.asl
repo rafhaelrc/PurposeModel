@@ -1,45 +1,33 @@
-bookOwner(tom). // Case 1 
-//statusFunction(payment(tom)). // Case 2 
+anti_goal(soldier_killed_from_allied_base).
 
 
-!holdBook.
-/* 
- *  * Case 1 - with artifact. 
- */
-/* 
-+!holdBook : bookOwner(Seller) 
-	<- deliver_paper_note(Seller); // Seller is a string
-	   .wait(deliverBook);
-	   .
-*/
+!territory_conquered. // agent goal
 
-/**
- * Case 2 and 3 - with institution
-*/
++!territory_conquered 
+	<- !alg1(territory_conquered,Actions);
+	   !try_actions(Actions).
+				   
++!try_actions(Actions) <- 
+	if(.length(Actions, Size) & Size < 1){
+		.fail;	
+	}
+	.queue.head(Actions,Action);
+	!alg2(Action, States);
+    if(anti_goal(AG) & .member(AG, States)){
+    	.queue.remove(Actions, Action);
+        !try_actions(Actions);
+	}
+    else{
+    	Action;             	
+	}.
 
-/*
-+!holdBook : statusFunction(SF) & bookOwner(Seller)
-			<- println("SF: ", SF);
-			   println("DONO: ", Seller);
-			   ?constitutive_rule(Action,SF,_,_);
-			   Action;
-			   .wait(deliverBook);
-			   .
- */
- 
-/*
- * Case 4  
- */
- 
- +!holdBook : bookOwner(X)  <- !alg1(holdBook, Actions);
- 	           .queue.head(Actions, Action);
- 	           //Action(X);
- 	           println("Action: ", Action);
- 	           //Action;
- 			   .
- 			   
- 			   
- 			   
+
+
+				   
+//+!try_actions([]) <-  .fail. // no action to achieve the goal
+
+
+
 /*
 +!teste <- .print("teste");
 		   .send(tom,tell,payment);
@@ -48,12 +36,11 @@ bookOwner(tom). // Case 1
 		   }.
 
 +!testeAlg1
-	<-  !alg1(publishedInformation,Actions);
+	<-  !alg1(territory_conquered,Actions);
 	    .queue.head(Actions,Action); 
 		Action;
 		.
 	
-
 +!testeAlg2
 	<- !alg2(sendMessageByTwitter, States);
 	   .print("States: " , States);
@@ -75,29 +62,27 @@ bookOwner(tom). // Case 1
 	   .
  */
 +!alg1(Goal, Actions)
-	<- 	.queue.create(Actions); 
+	<- 	.queue.create(Actions);
 		getPurposesOfState(Goal, Purposes);
 		for(.member(Purpose,Purposes)){
 	   		getStatusFunctionsFromPurpose(Purpose, NameStatusFunctions);
-		  	for(.member(StatusFunction, NameStatusFunctions)){
-		  		/*
-		  		if(.string(StatusFunction)){
-		  			.print("SF is STRING...");
-		  		}
-		  		println("SF ENCONTRADA: ", StatusFunction);
+	   		for(.member(StatusFunction, NameStatusFunctions)){
 		  		.term2string(TermStatusFunction,StatusFunction);
 		  		?constitutive_rule(Action,TermStatusFunction,_,_);
-		  		
-		  		*/
-		  		?constitutive_rule(Action,payment(X),_,_);
-		  		.queue.add(Actions,Action);
+		  		.queue.add(Actions, Action);
 		  	}
-		 } 	
-		.
-
+		 }.
 
 +!alg1(Goal, []).
 
++!percorreList([]).
+
++!percorreList([H|T])
+<-
+	.print("Element: " , H);
+	.term2string(Te,H);
+	!percorreList(T);
+	.
 
 +!alg2(Action, States) : constitutive_rule(Action,StatusFunction,_,_)
 	<- .queue.create(States); // S = {}
@@ -125,14 +110,7 @@ bookOwner(tom). // Case 1
 	   
 	   
 
-+!percorreList([]).
 
-+!percorreList([H|T])
-<-
-	.print("Element: " , H);
-	.term2string(Te,H);
-	!percorreList(T);
-	.
 
 
 

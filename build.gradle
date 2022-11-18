@@ -29,6 +29,7 @@ dependencies {
 	implementation group: 'net.sourceforge.owlapi', name: 'owlapi-distribution', version: '5.1.19'
 	implementation group: 'net.sourceforge.owlapi', name: 'org.semanticweb.hermit', version: '1.4.5.519'
   	implementation ('org.jacamo:jacamo:1.1.1-SNAPSHOT')
+  	//implementation ('com.github.rafhaelrc:PurposeModel:1.8')
   //implementation ('org.jacamo:jacamo:0.9')
     //implementation 'com.github.rafhaelrc:PurposeModel:3.0.0'
     //implementation 'com.github.smart-pucrs:MasOntology:2.0.0'

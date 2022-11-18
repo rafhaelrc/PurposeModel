@@ -15,15 +15,15 @@
 mas new_test {
 
 	agent bob {
-    	focus: machine, inst_test.inst_test_art //i1.i1_art
+    	focus: machine, inst_test.inst_test_art //, inst_test.i1_art
     }
-    agent tom {
-    	focus: machine, 
+    /*agent tom {
+    	focus: machine , 
     	       wsp_npl.nplArt, // case 03 
     	       inst_test.inst_test_art //focus on the institutional artifact
-    		
-    	goals: setup_sai  //connect norms and institution - case 03
-    }
+    	 
+    	 goals: setup_sai  //connect norms and institution - case 03
+    }*/
 
 	/*
 	 * Case 03 toda esse workspace
@@ -33,24 +33,16 @@ mas new_test {
     }
 
 	workspace wp{
-		//artifact onto: mas.OntologyArtifact("src/resources/social_networks_ontology.owl")
-		//artifact onto: pucrs.smart.ontology.mas.OntologyArtifact("src/resources/OntologiaTeste.owl")
-		//artifact onto: mas.OntologyArtifact("src/resources/OntologiaTeste.owl")
-		
 		//artifact onto: mas.OntologyArtifact("src/resources/initial_ontology_model_five_version.owl")
 	}
 	
     workspace wsp {
-		//artifact onto: mas.OntologyArtifact("src/resources/social_networks_ontology.owl")
+		artifact onto: mas.OntologyArtifact("resources/book_trade_ontology.owl")
 		artifact machine: tools.ElectronicMachine()
 	}
 	
-	//institution i1: src/resources/constitutive-specification.sai {
 	institution inst_test: src/resources/constitutive-specification.sai {
 		workspaces: wsp
 	}
-    
-    
-
 }
 

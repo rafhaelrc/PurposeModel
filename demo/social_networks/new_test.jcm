@@ -1,0 +1,19 @@
+
+mas new_test {
+
+	agent bob {
+    	focus: machine , inst_test.inst_test_art 
+    }
+
+	
+    workspace wsp {
+		artifact onto: mas.OntologyArtifact("src/resources/social_networks_ontology.owl")
+		artifact machine: tools.ElectronicMachine()
+	}
+	
+	
+	institution inst_test: src/resources/constitutive-specification.sai {
+		workspaces: wsp
+	} 
+}
+

@@ -1,0 +1,18 @@
+/**/
+
+institution_id : bhInst.
+
+status_functions:
+
+events: tweet, messageByTelegram, postByInstagram, postByFacebook.
+
+
+constitutive_rules:
+
+1: sendMessageByTwitter count-as tweet.
+2: talkWithBot count-as messageByTelegram.
+3: uploadAPicture count-as postByInstagram.
+4: uploadAMessage count-as postByFacebook. 
+
+
+
